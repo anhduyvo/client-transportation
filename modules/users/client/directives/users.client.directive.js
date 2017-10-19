@@ -12,13 +12,12 @@
       link: link
     };
 
-    return directive;
-
     function link(scope, element, attrs, modelCtrl) {
       modelCtrl.$parsers.push(function (input) {
         return input ? input.toLowerCase() : '';
       });
       element.css('text-transform', 'lowercase');
-    }
+    };
+    return directive;
   }
 }());
