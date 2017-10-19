@@ -17,7 +17,7 @@
         return input ? input.toLowerCase() : '';
       });
       element.css('text-transform', 'lowercase');
-    };
+    }
     return directive;
   }
 }());
