@@ -1,2 +1,1 @@
-- meanjs-shopping
-Source: - https://github.com/meanjs/mean
+meanjs-shopping from source: https://github.com/meanjs/mean
