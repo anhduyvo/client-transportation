@@ -1,2 +1,0 @@
-# meanjs-shopping
-meanjs-shopping
