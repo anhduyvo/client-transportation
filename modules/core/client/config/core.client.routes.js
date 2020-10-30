@@ -39,12 +39,13 @@
         controller: 'ErrorController',
         controllerAs: 'vm',
         params: {
-          message: function ($stateParams) {
+          message: function($stateParams) {
             return $stateParams.message;
           }
         },
         data: {
-          ignoreState: true
+          ignoreState: true,
+          pageTitle: 'Not Found'
         }
       })
       .state('bad-request', {
@@ -53,19 +54,21 @@
         controller: 'ErrorController',
         controllerAs: 'vm',
         params: {
-          message: function ($stateParams) {
+          message: function($stateParams) {
             return $stateParams.message;
           }
         },
         data: {
-          ignoreState: true
+          ignoreState: true,
+          pageTitle: 'Bad Request'
         }
       })
       .state('forbidden', {
         url: '/forbidden',
         templateUrl: '/modules/core/client/views/403.client.view.html',
         data: {
-          ignoreState: true
+          ignoreState: true,
+          pageTitle: 'Forbidden'
         }
       });
   }

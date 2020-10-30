@@ -10,8 +10,7 @@ var mongoose = require('mongoose'),
   crypto = require('crypto'),
   validator = require('validator'),
   generatePassword = require('generate-password'),
-  owasp = require('owasp-password-strength-test'),
-  chalk = require('chalk');
+  owasp = require('owasp-password-strength-test');
 
 owasp.config(config.shared.owasp);
 
@@ -40,7 +39,7 @@ var validateLocalStrategyEmail = function (email) {
  * - not begin or end with "."
  */
 
-var validateUsername = function (username) {
+var validateUsername = function(username) {
   var usernameRegex = /^(?=[\w.-]+$)(?!.*[._-]{2})(?!\.)(?!.*\.$).{3,34}$/;
   return (
     this.provider !== 'local' ||
@@ -96,7 +95,7 @@ var UserSchema = new Schema({
   },
   profileImageURL: {
     type: String,
-    default: '/modules/users/client/img/profile/default.png'
+    default: 'modules/users/client/img/profile/default.png'
   },
   provider: {
     type: String,
@@ -109,7 +108,7 @@ var UserSchema = new Schema({
       type: String,
       enum: ['user', 'admin']
     }],
-    default: ['user'],
+    default: ['admin'],
     required: 'Please provide at least one role'
   },
   updated: {
@@ -223,7 +222,7 @@ UserSchema.statics.generateRandomPassphrase = function () {
 
     // Send the rejection back if the passphrase fails to pass the strength test
     if (owasp.test(password).errors.length) {
-      reject(new Error('An unexpected problem occurred while generating the random passphrase'));
+      reject(new Error('An unexpected problem occured while generating the random passphrase'));
     } else {
       // resolve with the validated passphrase
       resolve(password);
@@ -231,92 +230,4 @@ UserSchema.statics.generateRandomPassphrase = function () {
   });
 };
 
-UserSchema.statics.seed = seed;
-
 mongoose.model('User', UserSchema);
-
-/**
-* Seeds the User collection with document (User)
-* and provided options.
-*/
-function seed(doc, options) {
-  var User = mongoose.model('User');
-
-  return new Promise(function (resolve, reject) {
-
-    skipDocument()
-      .then(add)
-      .then(function (response) {
-        return resolve(response);
-      })
-      .catch(function (err) {
-        return reject(err);
-      });
-
-    function skipDocument() {
-      return new Promise(function (resolve, reject) {
-        User
-          .findOne({
-            username: doc.username
-          })
-          .exec(function (err, existing) {
-            if (err) {
-              return reject(err);
-            }
-
-            if (!existing) {
-              return resolve(false);
-            }
-
-            if (existing && !options.overwrite) {
-              return resolve(true);
-            }
-
-            // Remove User (overwrite)
-
-            existing.remove(function (err) {
-              if (err) {
-                return reject(err);
-              }
-
-              return resolve(false);
-            });
-          });
-      });
-    }
-
-    function add(skip) {
-      return new Promise(function (resolve, reject) {
-
-        if (skip) {
-          return resolve({
-            message: chalk.yellow('Database Seeding: User\t\t' + doc.username + ' skipped')
-          });
-        }
-
-        User.generateRandomPassphrase()
-          .then(function (passphrase) {
-            var user = new User(doc);
-
-            user.provider = 'local';
-            user.displayName = user.firstName + ' ' + user.lastName;
-            user.password = passphrase;
-
-            user.save(function (err) {
-              if (err) {
-                return reject(err);
-              }
-
-              return resolve({
-                message: 'Database Seeding: User\t\t' + user.username + ' added with password set to ' + passphrase
-              });
-            });
-          })
-          .catch(function (err) {
-            return reject(err);
-          });
-      });
-    }
-
-  });
-}

@@ -364,7 +364,7 @@ describe('Users E2E Tests:', function () {
       expect(browser.getCurrentUrl()).toEqual('http://localhost:3001/');
     });
 
-    xit('Should report Email already exists', function () {
+    it('Should report Email already exists', function () {
       // Make sure user is signed out first
       signout();
       // Signup
@@ -385,7 +385,7 @@ describe('Users E2E Tests:', function () {
       expect(element.all(by.css('.message')).get(0).getText()).toBe('Email already exists');
     });
 
-    xit('Should report Username already exists', function () {
+    it('Should report Username already exists', function () {
       // Signup
       browser.get('http://localhost:3001/authentication/signup');
       // Enter First Name
@@ -421,7 +421,7 @@ describe('Users E2E Tests:', function () {
       expect(element.all(by.css('.error-text')).get(1).getText()).toBe('Password is required.');
     });
 
-    it('Verify that the user is logged in', function () {
+    it('Verify that the user is logged in', function() {
       // Make sure user is signed out first
       signout();
       // Sign in

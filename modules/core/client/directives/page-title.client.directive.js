@@ -19,17 +19,13 @@
 
       function listener(event, toState) {
         var applicationCoreTitle = 'MEAN.js',
-          separator = ' - ',
-          stateTitle = applicationCoreTitle + separator;
-
-        toState.name.split('.').forEach(function (value, index) {
-          stateTitle = stateTitle + value.charAt(0).toUpperCase() + value.slice(1) + separator;
-        });
+          separeteBy = ' - ';
         if (toState.data && toState.data.pageTitle) {
-          stateTitle = $interpolate(stateTitle + toState.data.pageTitle + separator)(($state.$current.locals.globals));
+          var stateTitle = $interpolate(toState.data.pageTitle)($state.$current.locals.globals);
+          element.html(applicationCoreTitle + separeteBy + stateTitle);
+        } else {
+          element.html(applicationCoreTitle);
         }
-        stateTitle = stateTitle.slice(0, 0 - separator.length);
-        element.text(stateTitle);
       }
     }
   }

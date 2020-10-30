@@ -71,7 +71,7 @@ module.exports = function (app, db) {
 
   // Create a MongoDB storage object
   var mongoStore = new MongoStore({
-    db: db,
+    mongooseConnection: db.connection,
     collection: config.sessionCollection
   });
 

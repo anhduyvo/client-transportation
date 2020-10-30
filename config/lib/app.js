@@ -4,10 +4,10 @@
  * Module dependencies.
  */
 var config = require('../config'),
-  mongooseService = require('./mongoose'),
+  mongoose = require('./mongoose'),
   express = require('./express'),
   chalk = require('chalk'),
-  seed = require('./mongo-seed');
+  seed = require('./seed');
 
 function seedDB() {
   if (config.seedDB && config.seedDB.seed) {
@@ -16,11 +16,11 @@ function seedDB() {
   }
 }
 
-module.exports.init = function init(callback) {
-  mongooseService.connect(function (db) {
-    // Initialize Models
-    mongooseService.loadModels(seedDB);
+// Initialize Models
+mongoose.loadModels(seedDB);
 
+module.exports.init = function init(callback) {
+  mongoose.connect(function (db) {
     // Initialize express
     var app = express.init(db);
     if (callback) callback(app, db, config);

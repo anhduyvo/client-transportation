@@ -29,7 +29,7 @@ var logger = new winston.Logger({
 // Useful for integrating with stream-related mechanism like Morgan's stream
 // option to log all HTTP requests to a file
 logger.stream = {
-  write: function (msg) {
+  write: function(msg) {
     logger.info(msg);
   }
 };
@@ -56,7 +56,7 @@ logger.setupFileLogger = function setupFileLogger() {
   } catch (err) {
     if (process.env.NODE_ENV !== 'test') {
       console.log();
-      console.log(chalk.red('An error has occurred during the creation of the File transport logger.'));
+      console.log(chalk.red('An error has occured during the creation of the File transport logger.'));
       console.log(chalk.red(err));
       console.log();
     }

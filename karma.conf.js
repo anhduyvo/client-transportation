@@ -7,11 +7,11 @@ var _ = require('lodash'),
   defaultAssets = require('./config/assets/default'),
   testAssets = require('./config/assets/test'),
   testConfig = require('./config/env/test'),
-  karmaReporters = ['mocha'];
+  karmaReporters = ['progress'];
 
 // Karma configuration
 module.exports = function (karmaConfig) {
-  var configuration = {
+  karmaConfig.set({
     frameworks: ['jasmine'],
 
     preprocessors: {
@@ -54,13 +54,7 @@ module.exports = function (karmaConfig) {
     // - Safari (only Mac)
     // - PhantomJS
     // - IE (only Windows)
-    browsers: ['Chrome'],
-    customLaunchers: {
-      Chrome_travis_ci: {
-        base: 'Chrome',
-        flags: ['--no-sandbox']
-      }
-    },
+    browsers: ['PhantomJS'],
 
     // If browser does not capture in given timeout [ms], kill it
     captureTimeout: 60000,
@@ -68,11 +62,5 @@ module.exports = function (karmaConfig) {
     // Continuous Integration mode
     // If true, it capture browsers, run tests and exit
     singleRun: true
-  };
-
-  if (process.env.TRAVIS) {
-    configuration.browsers = ['Chrome_travis_ci'];
-  }
-
-  karmaConfig.set(configuration);
+  });
 };
