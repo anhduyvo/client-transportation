@@ -20,7 +20,10 @@
 module.exports = {
   db: {
     uri: 'mongodb://localhost/local-dev',
-    options: {}
+    options: {
+      user: '',
+      pass: ''
+    }
   },
   sessionSecret: process.env.SESSION_SECRET || 'youshouldchangethistosomethingsecret',
   facebook: {
