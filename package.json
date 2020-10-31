@@ -1,7 +1,7 @@
 {
   "name": "demo-news",
   "version": "1.0.1",
-  "description": "demo-news: entrepreneur app",
+  "description": "demo news app",
   "main": "app.js",
   "author": {
     "name": "voduyanh",
