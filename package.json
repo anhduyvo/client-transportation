@@ -1,11 +1,14 @@
 {
   "name": "demo-news",
-  "version": "1.0.1",
   "description": "demo news app",
+  "version": "1.0.1",
+  "private": false,
   "main": "app.js",
-  "author": {
-    "name": "voduyanh",
-    "email": "voduyanh1984@yahoo.com"
+  "author": "devinsg",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/devinsg/demo-news.git"
   },
   "engines": {
     "node": "10.10.0",
