@@ -80,4 +80,5 @@ mongod
 *.njsproj
 *.sln
 
+# configure env
 .env
