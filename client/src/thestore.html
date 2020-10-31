@@ -1,0 +1,75 @@
+<html>
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+	<title>The Store</title>
+	<!-- favicon -->
+	<link rel="icon" href="images/favicon.ico" type="image/ico" sizes="16x16">
+	
+	<!-- css -->
+	<link rel="stylesheet" href="css/bxslider/jquery.bxslider.min.css" type="text/css" />
+	<link rel="stylesheet" href="css/style.css" type="text/css" />
+
+	<!-- js -->
+	<script src="js/jquery/jquery.min.js" type="text/javascript"></script>
+	<script src="js/moment/moment.min.js" type="text/javascript"></script>
+	<script src="js/bxslider/jquery.bxSlider.min.js" type="text/javascript"></script>
+	<script src="js/angular/angular.min.js" type="text/javascript"></script>
+
+	<!-- app -->
+	<script src="thestorepage.js" type="text/javascript"></script>
+	<!-- modules injection -->
+	<script src="modules/core/core.js" type="text/javascript"></script>
+	<script src="modules/core/coreDirective.js" type="text/javascript"></script>
+	<script src="modules/core/coreService.js" type="text/javascript"></script>
+	<script src="modules/core/coreController.js" type="text/javascript"></script>
+	
+	<script src="modules/thestore/thestore.js" type="text/javascript"></script>
+	<script src="modules/thestore/thestoreDirective.js" type="text/javascript"></script>
+	<script src="modules/thestore/thestoreController.js" type="text/javascript"></script>
+	<script src="modules/thestore/thestoreService.js" type="text/javascript"></script> 
+</head>
+<body>
+	<!-- header -->
+	<div id="top">
+		<div class="shell">
+			<div id="header" ng-header></div>
+		</div>
+	</div>
+	
+	<!-- main -->
+	<div id="main">
+		<div class="shell">
+			<!-- Search, etc -->
+			<div ng-search></div>
+			
+			<!-- Content -->
+			<div id="content" ng-controller="thestoreController as vm">
+				<!-- Tabs -->
+				<div class="tabs">
+					<ul ng-top-brand brandlist="vm.brandlist"></ul>
+				</div>
+				<!-- Tabs -->
+				
+				<!-- Tab-Content -->
+				<div id="container">
+					<div class="tabbed">
+						<div class="tab-content">
+							<div ng-product-list products="vm.products"></div>
+						</div>
+					</div>
+					<div ng-brand></div>
+					<div ng-footer></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- TO DO: footer -->
+
+	<script>
+		angular.element(function() {
+			angular.bootstrap(document, ['thestorepage']);
+		});
+	</script>
+</body>
+</html>

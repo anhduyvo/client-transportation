@@ -1,40 +1,40 @@
-version: '2'
+version: '3'
 services:
-  web:
-    restart: always
-    build: .
-    container_name: meanjs
-    ports:
-     - "3000:3000"
-     - "5858:5858"
-     - "8080:8080"
-     - "35729:35729"
+  database:
+    image: microsoft/mssql-server-linux:2017-latest
+    container_name: eshop_db
+    hostname: 'sqlserver'
     environment:
-     - NODE_ENV=development
-     - DB_1_PORT_27017_TCP_ADDR=db
-    depends_on:
-     - db
-    volumes_from:
-     - web-data
-  web-data:
-    build: .
-    entrypoint: /bin/true
-    volumes:
-     - ./:/opt/mean.js
-     - /opt/mean.js/node_modules
-     - /opt/mean.js/public
-     - /opt/mean.js/uploads
-  db:
-    image: mongo:3.2
-    restart: always
+      ACCEPT_EULA: Y
+      MSSQL_SA_PASSWORD: P@ssw0rd
+      MSSQL_PID: Developer
     ports:
-     - "27017:27017"
-    volumes_from:
-      - db-data
-  db-data:
-    image: mongo:3.2
+      - "1433:1433"
     volumes:
-      - /data/db
-      - /var/lib/mongodb
-      - /var/log/mongodb
-    entrypoint: /bin/true
+      - ./database:/home/database
+  #redis:
+  #  image: "redis:alpine"
+  #  container_name: eshop_redis
+  #  ports:
+  #    - "6379:6379"
+  #rabbitmq:
+  #  image: rabbitmq:3.7
+  #  container_name: eshop_queue
+  #  ports:
+  #    - "5672:5672"
+  api:
+    container_name: eshop_web
+    build: ./
+    ports:
+      - "8088:3000"
+    depends_on:
+      - database
+      #- redis
+      #- rabbitmq
+    links:
+      - database
+      #- redis
+      #- rabbitmq
+    volumes:
+      - ./:/home/app
+    command: [ "npm", "start" ]
