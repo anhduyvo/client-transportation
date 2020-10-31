@@ -44,9 +44,7 @@ server.use(function (err, req, res, next) {
 
 
 /**
- *   register eshop:
  * - client site: angular js & multiple pages
- * - admin site : angular js & single page
  */
 var pathPublic = path.join(__dirname, './client/src/');
 server.use('/', express.static(pathPublic, { index: 'index.html' }));
@@ -55,16 +53,5 @@ server.use('/product', express.static(pathPublic, { index: 'thestore.html' }));
 server.use('/product/:productKey', express.static(pathPublic, { index: 'productdetail.html' }));
 server.use('/search', express.static(pathPublic, { index: 'search.html' }));
 server.use('/contact', express.static(pathPublic, { index: 'contact.html' }));
-
-/*
-var pathProfile = path.join(__dirname, './profile/');
-server.use('/', express.static(pathProfile, { index: 'index.html' }));
-*/
-
-var pathAdmin = path.join(__dirname, './admin/src/');
-server.use('/admin', express.static(pathAdmin, { index: 'index.html' }));
-server.use('/app', express.static(path.join(pathAdmin, 'app')));
-server.use('/img', express.static(path.join(pathAdmin, 'img')));
-server.use('/libs', express.static(path.join(pathAdmin, 'libs')));
 
 module.exports = server;
