@@ -8,8 +8,8 @@ module.exports = {
       pass: ''
     }
   },
-  domain: 'laptrinh365.com',
-  sessionSecret: 'i_love_java_script',
+  domain: process.env.DOMAIN,
+  sessionSecret: process.env.SESSION_SECRET,
   facebook: {
     clientID: process.env.FACEBOOK_ID || 'APP_ID',
     clientSecret: process.env.FACEBOOK_SECRET || 'APP_SECRET',
