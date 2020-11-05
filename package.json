@@ -1,8 +1,8 @@
 {
   "name": "demo-news",
   "description": "Demo News: MongoDB, Express, AngularJS, and Node.js.",
-  "version": "0.5.0",
-  "meanjs-version": "0.5.0",
+  "version": "0.6.0",
+  "meanjs-version": "0.6.0",
   "private": false,
   "author": "voduyanh1984",
   "email": "voduyanh1984@yahoo.com",
@@ -13,7 +13,7 @@
   },
   "engines": {
     "node": "10.22.0",
-    "npm": "6.13.4"
+    "npm": "6.14.6"
   },
   "scripts": {
     "update": "npm update && npm prune && npm run bower",

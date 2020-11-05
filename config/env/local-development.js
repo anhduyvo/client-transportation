@@ -2,14 +2,14 @@
 
 module.exports = {
   db: {
-    uri: process.env.MONGODB_URI,
+    uri: 'mongodb://localhost/local-dev',
     options: {
       user: '',
       pass: ''
     }
   },
-  domain: process.env.DOMAIN,
-  sessionSecret: process.env.SESSION_SECRET,
+  domain: '',
+  sessionSecret: 'youshouldchangethistosomethingsecret',
   facebook: {
     clientID: process.env.FACEBOOK_ID || 'APP_ID',
     clientSecret: process.env.FACEBOOK_SECRET || 'APP_SECRET',
