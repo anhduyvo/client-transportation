@@ -1,26 +1,24 @@
 {
-  "name": "demo-news",
-  "description": "Demo News: MongoDB, Express, AngularJS, and Node.js.",
-  "version": "0.6.0",
-  "meanjs-version": "0.6.0",
+  "name": "meanjs",
+  "description": "Full-Stack JavaScript with MongoDB, Express, AngularJS, and Node.js.",
+  "version": "0.5.0",
+  "meanjs-version": "0.5.0",
   "private": false,
-  "author": "voduyanh1984",
-  "email": "voduyanh1984@yahoo.com",
+  "author": "https://github.com/meanjs/mean/graphs/contributors",
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/meanjs/mean.git"
   },
   "engines": {
-    "node": "10.22.0",
-    "npm": "6.14.6"
+    "node": "6.9.1",
+    "npm": "3.10.8"
   },
   "scripts": {
     "update": "npm update && npm prune && npm run bower",
     "clean": "rm -rf node_modules/ public/lib/",
     "reinstall": "npm cache clean && npm run clean && npm install",
-    "dev": "gulp",
-    "start": "NODE_ENV=production node server.js",
+    "start": "gulp",
     "start:prod": "gulp prod",
     "start:debug": "node-debug --web-host 0.0.0.0 server.js & gulp debug",
     "gulp": "gulp",
@@ -46,7 +44,6 @@
     "connect-mongo": "~1.3.2",
     "cookie-parser": "~1.4.1",
     "crypto": "0.0.3",
-    "dotenv": "^8.2.0",
     "express": "~4.15.2",
     "express-hbs": "^1.0.4",
     "express-session": "~1.15.2",
