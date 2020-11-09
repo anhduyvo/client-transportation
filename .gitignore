@@ -7,12 +7,12 @@ Thumbs.db
 
 # Node and related ecosystem
 # ==========================
-#.env
+.env
 .nodemonignore
 .sass-cache/
 node_modules/
-#public/lib/
-#public/dist/
+public/lib/
+public/dist/
 app/tests/coverage/
 .bower-*/
 .idea/
@@ -24,7 +24,7 @@ coverage/
 uploads
 modules/users/client/img/profile/uploads
 config/env/local.js
-#config/env/local-*.js
+config/env/local-*.js
 *.pem
 
 # Compiled less and sass files
@@ -47,7 +47,7 @@ _site/
 *.bak
 *.swp
 logs/
-#build/
+build/
 
 # Sublime editor
 # ==============
