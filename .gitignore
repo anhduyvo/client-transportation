@@ -7,10 +7,12 @@ Thumbs.db
 
 # Node and related ecosystem
 # ==========================
+.env
 .nodemonignore
 .sass-cache/
 node_modules/
 public/lib/
+public/dist/
 app/tests/coverage/
 .bower-*/
 .idea/
