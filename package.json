@@ -1,25 +1,24 @@
 {
-  "name": "demo-news",
+  "name": "meanjs",
   "description": "Full-Stack JavaScript with MongoDB, Express, AngularJS, and Node.js.",
   "version": "0.5.0",
   "meanjs-version": "0.5.0",
   "private": false,
-  "author": "https://github.com/meanjs/mean/graphs/contributors",
+  "author": "https://github.com/anhvoduy",
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/meanjs/mean.git"
   },
   "engines": {
-    "node": "10.20.0",
-    "npm": "6.14.4"
+    "node": "10.22.0",
+    "npm": "6.14.6"
   },
   "scripts": {
     "update": "npm update && npm prune && npm run bower",
     "clean": "rm -rf node_modules/ public/lib/",
     "reinstall": "npm cache clean && npm run clean && npm install",
-    "dev": "gulp",
-    "start": "NODE_ENV=production node server.js",
+    "start": "gulp",
     "start:prod": "gulp prod",
     "start:debug": "node-debug --web-host 0.0.0.0 server.js & gulp debug",
     "gulp": "gulp",
