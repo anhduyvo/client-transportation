@@ -24,6 +24,15 @@ services:
      - /opt/mean.js/node_modules
      - /opt/mean.js/public
      - /opt/mean.js/uploads
+  database:
+    image: mysql:5.7
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: "efilm"
+      MYSQL_ROOT_PASSWORD: "efilm"
+    volumes:
+      - ./database:/home/database
   db:
     image: mongo:3.2
     restart: always
