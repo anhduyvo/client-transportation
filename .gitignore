@@ -11,8 +11,8 @@ Thumbs.db
 .nodemonignore
 .sass-cache/
 node_modules/
-public/lib/
-public/dist/
+#public/lib/
+#public/dist/
 app/tests/coverage/
 .bower-*/
 .idea/
@@ -47,7 +47,7 @@ _site/
 *.bak
 *.swp
 logs/
-build/
+#build/
 
 # Sublime editor
 # ==============
