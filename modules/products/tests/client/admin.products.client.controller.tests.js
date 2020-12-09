@@ -1,15 +1,15 @@
 ﻿(function () {
   'use strict';
 
-  describe('Articles Admin Controller Tests', function () {
+  describe('Products Admin Controller Tests', function () {
     // Initialize global variables
-    var ArticlesAdminController,
+    var ProductsAdminController,
       $scope,
       $httpBackend,
       $state,
       Authentication,
-      ArticlesService,
-      mockArticle,
+      ProductsService,
+      mockProduct,
       Notification;
 
     // The $resource service augments the response object with methods for updating and deleting the resource.
@@ -37,7 +37,7 @@
     // The injector ignores leading and trailing underscores here (i.e. _$httpBackend_).
     // This allows us to inject a service but then attach it to a variable
     // with the same name as the service.
-    beforeEach(inject(function ($controller, $rootScope, _$state_, _$httpBackend_, _Authentication_, _ArticlesService_, _Notification_) {
+    beforeEach(inject(function ($controller, $rootScope, _$state_, _$httpBackend_, _Authentication_, _ProductsService_, _Notification_) {
       // Set a new global scope
       $scope = $rootScope.$new();
 
@@ -45,16 +45,16 @@
       $httpBackend = _$httpBackend_;
       $state = _$state_;
       Authentication = _Authentication_;
-      ArticlesService = _ArticlesService_;
+      ProductsService = _ProductsService_;
       Notification = _Notification_;
 
       // Ignore parent template get on state transitions
       $httpBackend.whenGET('/modules/core/client/views/home.client.view.html').respond(200, '');
 
-      // create mock article
-      mockArticle = new ArticlesService({
+      // create mock product
+      mockProduct = new ProductsService({
         _id: '525a8422f6d0f87f0e407a33',
-        title: 'An Article about MEAN',
+        title: 'An product about MEAN',
         content: 'MEAN rocks!'
       });
 
@@ -63,10 +63,10 @@
         roles: ['user']
       };
 
-      // Initialize the Articles controller.
-      ArticlesAdminController = $controller('ArticlesAdminController as vm', {
+      // Initialize the Products controller.
+      ProductsAdminController = $controller('ProductsAdminController as vm', {
         $scope: $scope,
-        articleResolve: {}
+        productResolve: {}
       });
 
       // Spy on state go
@@ -76,98 +76,98 @@
     }));
 
     describe('vm.save() as create', function () {
-      var sampleArticlePostData;
+      var sampleProductPostData;
 
       beforeEach(function () {
-        // Create a sample article object
-        sampleArticlePostData = new ArticlesService({
-          title: 'An Article about MEAN',
+        // Create a sample Product object
+        sampleProductPostData = new ProductsService({
+          title: 'An Product about MEAN',
           content: 'MEAN rocks!'
         });
 
-        $scope.vm.article = sampleArticlePostData;
+        $scope.vm.product = sampleProductPostData;
       });
 
-      it('should send a POST request with the form input values and then locate to new object URL', inject(function (ArticlesService) {
+      it('should send a POST request with the form input values and then locate to new object URL', inject(function (ProductsService) {
         // Set POST response
-        $httpBackend.expectPOST('/api/articles', sampleArticlePostData).respond(mockArticle);
+        $httpBackend.expectPOST('/api/products', sampleProductPostData).respond(mockProduct);
 
         // Run controller functionality
         $scope.vm.save(true);
         $httpBackend.flush();
 
         // Test Notification success was called
-        expect(Notification.success).toHaveBeenCalledWith({ message: '<i class="glyphicon glyphicon-ok"></i> Article saved successfully!' });
-        // Test URL redirection after the article was created
-        expect($state.go).toHaveBeenCalledWith('admin.articles.list');
+        expect(Notification.success).toHaveBeenCalledWith({ message: '<i class="glyphicon glyphicon-ok"></i> Product saved successfully!' });
+        // Test URL redirection after the product was created
+        expect($state.go).toHaveBeenCalledWith('admin.products.list');
       }));
 
       it('should call Notification.error if error', function () {
         var errorMessage = 'this is an error message';
-        $httpBackend.expectPOST('/api/articles', sampleArticlePostData).respond(400, {
+        $httpBackend.expectPOST('/api/products', sampleProductPostData).respond(400, {
           message: errorMessage
         });
 
         $scope.vm.save(true);
         $httpBackend.flush();
 
-        expect(Notification.error).toHaveBeenCalledWith({ message: errorMessage, title: '<i class="glyphicon glyphicon-remove"></i> Article save error!' });
+        expect(Notification.error).toHaveBeenCalledWith({ message: errorMessage, title: '<i class="glyphicon glyphicon-remove"></i> Product save error!' });
       });
     });
 
     describe('vm.save() as update', function () {
       beforeEach(function () {
-        // Mock article in $scope
-        $scope.vm.article = mockArticle;
+        // Mock product in $scope
+        $scope.vm.product = mockProduct;
       });
 
-      it('should update a valid article', inject(function (ArticlesService) {
+      it('should update a valid product', inject(function (ProductsService) {
         // Set PUT response
-        $httpBackend.expectPUT(/api\/articles\/([0-9a-fA-F]{24})$/).respond();
+        $httpBackend.expectPUT(/api\/products\/([0-9a-fA-F]{24})$/).respond();
 
         // Run controller functionality
         $scope.vm.save(true);
         $httpBackend.flush();
 
         // Test Notification success was called
-        expect(Notification.success).toHaveBeenCalledWith({ message: '<i class="glyphicon glyphicon-ok"></i> Article saved successfully!' });
+        expect(Notification.success).toHaveBeenCalledWith({ message: '<i class="glyphicon glyphicon-ok"></i> Product saved successfully!' });
         // Test URL location to new object
-        expect($state.go).toHaveBeenCalledWith('admin.articles.list');
+        expect($state.go).toHaveBeenCalledWith('admin.products.list');
       }));
 
-      it('should  call Notification.error if error', inject(function (ArticlesService) {
+      it('should  call Notification.error if error', inject(function (ProductsService) {
         var errorMessage = 'error';
-        $httpBackend.expectPUT(/api\/articles\/([0-9a-fA-F]{24})$/).respond(400, {
+        $httpBackend.expectPUT(/api\/products\/([0-9a-fA-F]{24})$/).respond(400, {
           message: errorMessage
         });
 
         $scope.vm.save(true);
         $httpBackend.flush();
 
-        expect(Notification.error).toHaveBeenCalledWith({ message: errorMessage, title: '<i class="glyphicon glyphicon-remove"></i> Article save error!' });
+        expect(Notification.error).toHaveBeenCalledWith({ message: errorMessage, title: '<i class="glyphicon glyphicon-remove"></i> Product save error!' });
       }));
     });
 
     describe('vm.remove()', function () {
       beforeEach(function () {
-        // Setup articles
-        $scope.vm.article = mockArticle;
+        // Setup products
+        $scope.vm.product = mockProduct;
       });
 
-      it('should delete the article and redirect to articles', function () {
+      it('should delete the product and redirect to products', function () {
         // Return true on confirm message
         spyOn(window, 'confirm').and.returnValue(true);
 
-        $httpBackend.expectDELETE(/api\/articles\/([0-9a-fA-F]{24})$/).respond(204);
+        $httpBackend.expectDELETE(/api\/products\/([0-9a-fA-F]{24})$/).respond(204);
 
         $scope.vm.remove();
         $httpBackend.flush();
 
-        expect(Notification.success).toHaveBeenCalledWith({ message: '<i class="glyphicon glyphicon-ok"></i> Article deleted successfully!' });
-        expect($state.go).toHaveBeenCalledWith('admin.articles.list');
+        expect(Notification.success).toHaveBeenCalledWith({ message: '<i class="glyphicon glyphicon-ok"></i> Product deleted successfully!' });
+        expect($state.go).toHaveBeenCalledWith('admin.products.list');
       });
 
-      it('should should not delete the article and not redirect', function () {
+      it('should should not delete the product and not redirect', function () {
         // Return false on confirm message
         spyOn(window, 'confirm').and.returnValue(false);
 

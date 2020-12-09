@@ -7,9 +7,9 @@ var mongoose = require('mongoose'),
   Schema = mongoose.Schema;
 
 /**
- * Article Schema
+ * Product Schema
  */
-var ArticleSchema = new Schema({
+var ProductSchema = new Schema({
   created: {
     type: Date,
     default: Date.now
@@ -25,10 +25,15 @@ var ArticleSchema = new Schema({
     default: '',
     trim: true
   },
+  image_url: {
+    type: String,
+    default: '',
+    trim: true
+  },
   user: {
     type: Schema.ObjectId,
     ref: 'User'
   }
 });
 
-mongoose.model('Article', ArticleSchema);
+mongoose.model('Product', ProductSchema);
