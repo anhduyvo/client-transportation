@@ -2,31 +2,31 @@
   'use strict';
 
   angular
-    .module('articles.routes')
+    .module('products.routes')
     .config(routeConfig);
 
   routeConfig.$inject = ['$stateProvider'];
 
   function routeConfig($stateProvider) {
     $stateProvider
-      .state('articles', {
+      .state('products', {
         abstract: true,
-        url: '/articles',
+        url: '/products',
         template: '<ui-view/>'
       })
-      .state('articles.list', {
+      .state('products.list', {
         url: '',
-        templateUrl: '/modules/articles/client/views/list-articles.client.view.html',
-        controller: 'ArticlesListController',
+        templateUrl: '/modules/products/client/views/list-products.client.view.html',
+        controller: 'ProductsListController',
         controllerAs: 'vm',
         data: {
-          pageTitle: 'Articles List'
+          pageTitle: 'Products List'
         }
       })
-      .state('articles.view', {
+      .state('products.view', {
         url: '/:articleId',
-        templateUrl: '/modules/articles/client/views/view-article.client.view.html',
-        controller: 'ArticlesController',
+        templateUrl: '/modules/products/client/views/view-article.client.view.html',
+        controller: 'ProductsController',
         controllerAs: 'vm',
         resolve: {
           articleResolve: getArticle
@@ -37,10 +37,10 @@
       });
   }
 
-  getArticle.$inject = ['$stateParams', 'ArticlesService'];
+  getArticle.$inject = ['$stateParams', 'ProductsService'];
 
-  function getArticle($stateParams, ArticlesService) {
-    return ArticlesService.get({
+  function getArticle($stateParams, ProductsService) {
+    return ProductsService.get({
       articleId: $stateParams.articleId
     }).$promise;
   }

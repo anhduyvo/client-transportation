@@ -1,17 +1,17 @@
 ﻿(function () {
   'use strict';
 
-  // Configuring the Articles Admin module
+  // Configuring the Products Admin module
   angular
-    .module('articles.admin')
+    .module('products.admin')
     .run(menuConfig);
 
   menuConfig.$inject = ['menuService'];
 
   function menuConfig(Menus) {
     Menus.addSubMenuItem('topbar', 'admin', {
-      title: 'Manage Articles',
-      state: 'admin.articles.list'
+      title: 'Manage Products',
+      state: 'admin.products.list'
     });
   }
 }());
