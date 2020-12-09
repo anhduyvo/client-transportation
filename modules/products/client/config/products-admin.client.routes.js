@@ -25,41 +25,41 @@
       })
       .state('admin.products.create', {
         url: '/create',
-        templateUrl: '/modules/products/client/views/admin/form-article.client.view.html',
+        templateUrl: '/modules/products/client/views/admin/form-product.client.view.html',
         controller: 'ProductsAdminController',
         controllerAs: 'vm',
         data: {
           roles: ['admin']
         },
         resolve: {
-          articleResolve: newArticle
+          productResolve: newProduct
         }
       })
       .state('admin.products.edit', {
-        url: '/:articleId/edit',
-        templateUrl: '/modules/products/client/views/admin/form-article.client.view.html',
+        url: '/:productId/edit',
+        templateUrl: '/modules/products/client/views/admin/form-product.client.view.html',
         controller: 'ProductsAdminController',
         controllerAs: 'vm',
         data: {
           roles: ['admin']
         },
         resolve: {
-          articleResolve: getArticle
+          productResolve: getProduct
         }
       });
   }
 
-  getArticle.$inject = ['$stateParams', 'ProductsService'];
+  getProduct.$inject = ['$stateParams', 'ProductsService'];
 
-  function getArticle($stateParams, ProductsService) {
+  function getProduct($stateParams, ProductsService) {
     return ProductsService.get({
-      articleId: $stateParams.articleId
+      productId: $stateParams.productId
     }).$promise;
   }
 
-  newArticle.$inject = ['ProductsService'];
+  newProduct.$inject = ['ProductsService'];
 
-  function newArticle(ProductsService) {
+  function newProduct(ProductsService) {
     return new ProductsService();
   }
 }());

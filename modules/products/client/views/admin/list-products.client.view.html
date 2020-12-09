@@ -8,16 +8,16 @@
     </h1>
   </div>
   <div class="list-group">
-    <a data-ng-repeat="article in vm.products" data-ui-sref="admin.products.edit({articleId: article._id})" class="list-group-item">
+    <a data-ng-repeat="product in vm.products" data-ui-sref="admin.products.edit({productId: product._id})" class="list-group-item">
       <small class="list-group-item-text">
         Posted on
-        <span data-ng-bind="article.created | date:'mediumDate'"></span>
+        <span data-ng-bind="product.created | date:'mediumDate'"></span>
         by
-        <span ng-if="article.user" ng-bind="article.user.displayName"></span>
-        <span ng-if="!article.user">Deleted User</span>
+        <span ng-if="product.user" ng-bind="product.user.displayName"></span>
+        <span ng-if="!product.user">Deleted User</span>
       </small>
-      <h4 class="list-group-item-heading" data-ng-bind="article.title"></h4>
-      <p class="list-group-item-text" data-ng-bind="article.content"></p>
+      <h4 class="list-group-item-heading" data-ng-bind="product.title"></h4>
+      <p class="list-group-item-text" data-ng-bind="product.content"></p>
     </a>
   </div>
   <div class="alert alert-warning text-center" data-ng-if="products.$resolved && !products.length">
