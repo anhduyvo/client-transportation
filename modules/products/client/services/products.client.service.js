@@ -2,14 +2,14 @@
   'use strict';
 
   angular
-    .module('articles.services')
-    .factory('ArticlesService', ArticlesService);
+    .module('products.services')
+    .factory('ProductsService', ProductsService);
 
-  ArticlesService.$inject = ['$resource', '$log'];
+  ProductsService.$inject = ['$resource', '$log'];
 
-  function ArticlesService($resource, $log) {
-    var Article = $resource('/api/articles/:articleId', {
-      articleId: '@_id'
+  function ProductsService($resource, $log) {
+    var Product = $resource('/api/products/:productId', {
+      productId: '@_id'
     }, {
       update: {
         method: 'PUT'
@@ -18,22 +18,22 @@
 
     angular.extend(Article.prototype, {
       createOrUpdate: function () {
-        var article = this;
-        return createOrUpdate(article);
+        var product = this;
+        return createOrUpdate(product);
       }
     });
 
-    return Article;
+    return Product;
 
-    function createOrUpdate(article) {
-      if (article._id) {
-        return article.$update(onSuccess, onError);
+    function createOrUpdate(product) {
+      if (product._id) {
+        return product.$update(onSuccess, onError);
       } else {
-        return article.$save(onSuccess, onError);
+        return product.$save(onSuccess, onError);
       }
 
       // Handle successful response
-      function onSuccess(article) {
+      function onSuccess(product) {
         // Any required internal processing from inside the service, goes here.
       }
 
