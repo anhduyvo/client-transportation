@@ -1,2 +1,2 @@
-# demo-news
-demo news
+# demo-videos
+demo videos
