@@ -36,7 +36,6 @@ exports.read = function (req, res) {
   // Add a custom field to the product, for determining if the current User is the "owner".
   // NOTE: This field is NOT persisted to the database, since it doesn't exist in the product model.
   product.isCurrentUserOwner = !!(req.user && product.user && product.user._id.toString() === req.user._id.toString());
-
   res.json(product);
 };
 
@@ -81,7 +80,7 @@ exports.delete = function (req, res) {
  * List of Products
  */
 exports.list = function (req, res) {
-  Products.find().sort('-created').populate('user', 'displayName').exec(function (err, products) {
+  Product.find().sort('-created').populate('user', 'displayName').exec(function (err, products) {
     if (err) {
       return res.status(422).send({
         message: errorHandler.getErrorMessage(err)

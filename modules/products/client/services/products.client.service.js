@@ -16,7 +16,7 @@
       }
     });
 
-    angular.extend(Article.prototype, {
+    angular.extend(Product.prototype, {
       createOrUpdate: function () {
         var product = this;
         return createOrUpdate(product);
