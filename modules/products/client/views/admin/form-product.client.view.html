@@ -22,6 +22,10 @@
           <textarea name="content" data-ng-model="vm.product.content" id="content" class="form-control" cols="30" rows="10" placeholder="Content"></textarea>
         </div>
         <div class="form-group">
+          <label class="control-label" for="content">Image</label>
+          <input name="image_url" type="text" ng-model="vm.product.image_url" id="title" class="form-control" placeholder="Image Url"/>
+        </div>
+        <div class="form-group">
           <button type="submit" class="btn btn-default">{{vm.product._id ? 'Update' : 'Create'}}</button>
         </div>
       </fieldset>
