@@ -114,3 +114,78 @@ exports.productByID = function (req, res, next, id) {
     next();
   });
 };
+
+/**
+ * Update product image picture
+ */
+exports.changeProductImage = function (req, res) {
+  var product = req.product;
+  var existingImageUrl;
+
+  // Filtering to upload only images
+  var multerConfig = config.uploads.product.image;
+  multerConfig.fileFilter = require(path.resolve('./config/lib/multer')).imageFileFilter;
+  var upload = multer(multerConfig).single('newProductImage');
+
+  if (product) {
+    existingImageUrl = product.profileImageURL;
+    uploadImage()
+      .then(updateProduct)
+      .then(deleteOldImage)
+      .then(function () {
+        res.json(user);
+      })
+      .catch(function (err) {
+        res.status(422).send(err);
+      });
+  } else {
+    res.status(401).send({
+      message: 'User is not signed in'
+    });
+  }
+
+  function uploadImage () {
+    return new Promise(function (resolve, reject) {
+      upload(req, res, function (uploadError) {
+        if (uploadError) {
+          reject(errorHandler.getErrorMessage(uploadError));
+        } else {
+          resolve();
+        }
+      });
+    });
+  }
+
+  function updateProduct () {
+    return new Promise(function (resolve, reject) {
+      user.profileImageURL = config.uploads.profile.image.dest + req.file.filename;
+      user.save(function (err, theuser) {
+        if (err) {
+          reject(err);
+        } else {
+          resolve();
+        }
+      });
+    });
+  }
+
+  function deleteOldImage () {
+    return new Promise(function (resolve, reject) {
+      if (existingImageUrl !== User.schema.path('profileImageURL').defaultValue) {
+        fs.unlink(existingImageUrl, function (unlinkError) {
+          if (unlinkError) {
+            console.log(unlinkError);
+            reject({
+              message: 'Error occurred while deleting old profile picture'
+            });
+          } else {
+            resolve();
+          }
+        });
+      } else {
+        resolve();
+      }
+    });
+  }
+
+};
