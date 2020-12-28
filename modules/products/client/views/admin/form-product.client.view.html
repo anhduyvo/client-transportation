@@ -10,6 +10,7 @@
   <div class="col-md-12">
     <form name="vm.form.productForm" class="form-horizontal" ng-submit="vm.save(vm.form.productForm.$valid)" novalidate>
       <fieldset>
+        <!-- Product Information -->
         <div class="form-group" show-errors>
           <label class="control-label" for="title">Title</label>
           <input name="title" type="text" ng-model="vm.product.title" id="title" class="form-control" placeholder="Title" required autofocus>
@@ -24,10 +25,31 @@
         <div class="form-group">
           <label class="control-label" for="content">Image</label>
           <input name="image_url" type="text" ng-model="vm.product.image_url" id="title" class="form-control" placeholder="Image Url"/>
-        </div>
+        </div>        
+
         <div class="form-group">
           <button type="submit" class="btn btn-default">{{vm.product._id ? 'Update' : 'Create'}}</button>
         </div>
+        
+        <!-- Product Image -->
+        <div class="form-group">
+          <img ngf-src="vm.fileSelected ? picFile : '/' + vm.product.image_url" alt="{{vm.product.title}}" class="img-thumbnail user-profile-picture" ngf-drop>
+        </div>
+        <div ng-show="vm.loading" class="form-group">
+          <img ng-src="/modules/core/client/img/loaders/loader.gif" height="50" width="50" alt="Loading image...">
+        </div>
+        <div ng-show="!vm.fileSelected" class="form-group">
+          <button class="btn btn-default btn-file" ngf-select="(vm.fileSelected = true) && (vm.loading = false)" ng-model="picFile" accept="image/*" ngf-before-model-change="vm.loading = true" ngf-resize="{width: 400}" ngf-resize-if="$width > 400 || $height > 400">Select Picture</button>
+        </div>
+        <div ng-show="vm.fileSelected" class="form-group">
+          <button class="btn btn-primary" ng-click="vm.upload(picFile)">Use This Picture</button>
+          <button class="btn btn-default" ng-click="vm.fileSelected = false">Cancel</button>
+        </div>
+        <div ng-show="vm.fileSelected" class="progress">
+          <div class="progress-bar" role="progressbar" aria-valuenow="{{vm.progress}}" aria-valuemin="0" aria-valuemax="100" style="width:{{vm.progress}}%" ng-bind="vm.progress + '%'">
+            <span class="sr-only">{{vm.progress}}% Complete</span>
+          </div>
+        </div>        
       </fieldset>
     </form>
   </div>
