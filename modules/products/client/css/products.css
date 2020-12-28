@@ -1,0 +1,9 @@
+@media (min-width: 992px) {
+  .nav-products {
+    position: fixed;
+  }
+}
+.product-image-url {
+  max-height: 300px;
+  min-height: 300px;
+}

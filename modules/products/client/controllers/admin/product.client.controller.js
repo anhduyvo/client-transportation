@@ -9,7 +9,7 @@
 
   function ProductsAdminController($scope, $state, $window, product, Authentication, Notification) {
     var vm = this;
-
+    
     vm.product = product;
     vm.authentication = Authentication;
     vm.form = {};
