@@ -220,7 +220,7 @@ var initGlobalConfig = function () {
     getGlobbedPaths: getGlobbedPaths,
     validateSessionSecret: validateSessionSecret
   };
-
+  console.log(config);
   return config;
 };
 
