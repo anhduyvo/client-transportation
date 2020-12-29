@@ -12,34 +12,47 @@ acl = new acl(new acl.memoryBackend());
  * Invoke Products Permissions
  */
 exports.invokeRolesPolicies = function () {
-  acl.allow([{
-    roles: ['admin'],
-    allows: [{
-      resources: '/api/products',
-      permissions: '*'
-    }, {
-      resources: '/api/products/:productId',
-      permissions: '*'
-    }]
-  }, {
-    roles: ['user'],
-    allows: [{
-      resources: '/api/products',
-      permissions: ['get']
-    }, {
-      resources: '/api/products/:productId',
-      permissions: ['get']
-    }]
-  }, {
-    roles: ['guest'],
-    allows: [{
-      resources: '/api/products',
-      permissions: ['get']
-    }, {
-      resources: '/api/products/:productId',
-      permissions: ['get']
-    }]
-  }]);
+  acl.allow([
+    {
+      roles: ['admin'],
+      allows: [
+        {
+          resources: '/api/products',
+          permissions: '*'
+        }, 
+        {
+          resources: '/api/products/:productId',
+          permissions: '*'
+        }
+      ]
+    }, 
+    {
+      roles: ['user'],
+      allows: [
+        {
+          resources: '/api/products',
+          permissions: ['get']
+        }, 
+        {
+          resources: '/api/products/:productId',
+          permissions: ['get']
+        }
+      ]
+    }, 
+    {
+      roles: ['guest'],
+      allows: [
+        {
+          resources: '/api/products',
+          permissions: ['get']
+        }, 
+        {
+          resources: '/api/products/:productId',
+          permissions: ['get']
+        }
+      ]
+    }
+  ]);
 };
 
 /**

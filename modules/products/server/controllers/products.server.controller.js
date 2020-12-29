@@ -1,5 +1,7 @@
 'use strict';
 
+const { debug } = require('winston');
+
 /**
  * Module dependencies
  */
@@ -80,6 +82,7 @@ exports.delete = function (req, res) {
  * List of Products
  */
 exports.list = function (req, res) {
+  console.log('--- list ---');
   Product.find().sort('-created').populate('user', 'displayName').exec(function (err, products) {
     if (err) {
       return res.status(422).send({
@@ -119,7 +122,8 @@ exports.productByID = function (req, res, next, id) {
  * Update product image
  */
 exports.changeProductImage = function (req, res) {
-  console.log('changeProductImage ...', config.uploads.product.image)
+  console.log('----- changeProductImage -----');
+
   var product = req.product;
   var existingImageUrl;
 
@@ -146,6 +150,7 @@ exports.changeProductImage = function (req, res) {
   }
 
   function uploadImage () {
+    console.log('----- uploadImage -----');
     return new Promise(function (resolve, reject) {
       upload(req, res, function (uploadError) {
         if (uploadError) {
