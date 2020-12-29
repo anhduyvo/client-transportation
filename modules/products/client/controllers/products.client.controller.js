@@ -5,9 +5,9 @@
     .module('products')
     .controller('ProductsController', ProductsController);
 
-  ProductsController.$inject = ['productResolve', 'Authentication'];
+  ProductsController.$inject = ['$scope', 'productResolve', 'Authentication'];
 
-  function ProductsController(product, Authentication) {
+  function ProductsController($scope, product, Authentication) {
     var vm = this;
 
     vm.product = product;
