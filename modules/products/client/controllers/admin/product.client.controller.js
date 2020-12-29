@@ -15,6 +15,7 @@
     vm.form = {};
     vm.remove = remove;
     vm.save = save;
+    vm.upload = upload;
 
     // Remove existing product
     function remove() {
@@ -47,5 +48,25 @@
         Notification.error({ message: res.data.message, title: '<i class="glyphicon glyphicon-remove"></i> product save error!' });
       }
     }
+
+    // upload product image
+    function (dataUrl) {
+      console.log('- dataUrl:', dataUrl);
+
+      Upload.upload({
+        url: '/api/users/picture',
+        data: {
+          newProductImage: dataUrl
+        }
+      }).then(function (response) {
+        $timeout(function () {
+          onSuccessItem(response.data);
+        });
+      }, function (response) {
+        if (response.status > 0) onErrorItem(response.data);
+      }, function (evt) {
+        vm.progress = parseInt(100.0 * evt.loaded / evt.total, 10);
+      });
+    };
   }
 }());

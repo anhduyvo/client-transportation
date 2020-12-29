@@ -16,8 +16,9 @@ module.exports = function (app) {
   app.route('/api/products/:productId').all(productsPolicy.isAllowed)
     .get(products.read)
     .put(products.update)
-    .delete(products.delete);
+    .post(products.changeProductImage)
+    .delete(products.delete);  
 
   // Finish by binding the product middleware
-  app.param('productId', products.productByID);
+  app.param('productId', products.productByID);  
 };

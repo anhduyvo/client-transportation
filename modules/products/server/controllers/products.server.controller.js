@@ -13,7 +13,7 @@ var path = require('path'),
  */
 exports.create = function (req, res) {
   var product = new Product(req.body);
-  product.user = req.user;
+  product.product = req.product;
 
   product.save(function (err) {
     if (err) {
@@ -116,24 +116,25 @@ exports.productByID = function (req, res, next, id) {
 };
 
 /**
- * Update product image picture
+ * Update product image
  */
 exports.changeProductImage = function (req, res) {
   var product = req.product;
   var existingImageUrl;
 
   // Filtering to upload only images
+  console.log(config.uploads.product.image);
   var multerConfig = config.uploads.product.image;
   multerConfig.fileFilter = require(path.resolve('./config/lib/multer')).imageFileFilter;
   var upload = multer(multerConfig).single('newProductImage');
 
   if (product) {
-    existingImageUrl = product.profileImageURL;
+    existingImageUrl = product.image_url;
     uploadImage()
       .then(updateProduct)
       .then(deleteOldImage)
       .then(function () {
-        res.json(user);
+        res.json(product);
       })
       .catch(function (err) {
         res.status(422).send(err);
@@ -158,8 +159,8 @@ exports.changeProductImage = function (req, res) {
 
   function updateProduct () {
     return new Promise(function (resolve, reject) {
-      user.profileImageURL = config.uploads.profile.image.dest + req.file.filename;
-      user.save(function (err, theuser) {
+      product.image_url = config.uploads.product.image.dest + req.file.filename;
+      product.save(function (err, theproduct) {
         if (err) {
           reject(err);
         } else {
@@ -171,12 +172,12 @@ exports.changeProductImage = function (req, res) {
 
   function deleteOldImage () {
     return new Promise(function (resolve, reject) {
-      if (existingImageUrl !== User.schema.path('profileImageURL').defaultValue) {
+      if (existingImageUrl !== Product.schema.path('image_url').defaultValue) {
         fs.unlink(existingImageUrl, function (unlinkError) {
           if (unlinkError) {
             console.log(unlinkError);
             reject({
-              message: 'Error occurred while deleting old profile picture'
+              message: 'Error occurred while deleting old product image'
             });
           } else {
             resolve();
