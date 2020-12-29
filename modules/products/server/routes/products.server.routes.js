@@ -21,5 +21,5 @@ module.exports = function (app) {
   app.route('/api/products/image').post(products.changeProductImage);
 
   // Finish by binding the product middleware
-  app.param('productId', products.productByID);  
+  app.param('productId', products.productByID);
 };
