@@ -123,7 +123,6 @@ exports.changeProductImage = function (req, res) {
   var existingImageUrl;
 
   // Filtering to upload only images
-  console.log(config.uploads.product.image);
   var multerConfig = config.uploads.product.image;
   multerConfig.fileFilter = require(path.resolve('./config/lib/multer')).imageFileFilter;
   var upload = multer(multerConfig).single('newProductImage');
