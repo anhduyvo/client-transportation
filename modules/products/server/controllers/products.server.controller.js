@@ -119,6 +119,7 @@ exports.productByID = function (req, res, next, id) {
  * Update product image
  */
 exports.changeProductImage = function (req, res) {
+  console.log('changeProductImage ...', config.uploads.product.image)
   var product = req.product;
   var existingImageUrl;
 

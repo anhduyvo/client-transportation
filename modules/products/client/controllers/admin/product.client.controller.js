@@ -5,9 +5,9 @@
     .module('products.admin')
     .controller('ProductsAdminController', ProductsAdminController);
 
-  ProductsAdminController.$inject = ['$scope', '$state', '$window', 'productResolve', 'Authentication', 'Notification'];
+  ProductsAdminController.$inject = ['$scope', '$state', '$window', 'productResolve', 'Authentication', 'Upload', 'Notification'];
 
-  function ProductsAdminController($scope, $state, $window, product, Authentication, Notification) {
+  function ProductsAdminController($scope, $state, $window, product, Authentication, Upload, Notification) {
     var vm = this;
     
     vm.product = product;
@@ -50,9 +50,8 @@
     }
 
     // upload product image
-    function (dataUrl) {
-      console.log('- dataUrl:', dataUrl);
-
+    function upload(dataUrl) {
+      
       Upload.upload({
         url: '/api/products/image',
         data: {
