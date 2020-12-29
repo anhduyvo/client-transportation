@@ -54,7 +54,7 @@
       console.log('- dataUrl:', dataUrl);
 
       Upload.upload({
-        url: '/api/users/picture',
+        url: '/api/products/image',
         data: {
           newProductImage: dataUrl
         }
