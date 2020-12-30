@@ -45,6 +45,8 @@ exports.read = function (req, res) {
  * Update an product
  */
 exports.update = function (req, res) {
+  console.log('- update product:', req.product);
+  console.log('- update body:', req.body);
   var product = req.product;
 
   product.title = req.body.title;
@@ -121,21 +123,23 @@ exports.productByID = function (req, res, next, id) {
  * Update product image
  */
 exports.changeProductImage = function (req, res) {
-  var product = req.user; // TO DO review client side
-  var existingImageUrl;
-
+  var user = req.user;
+  
   // Filtering to upload only images
   var multerConfig = config.uploads.product.image;
   multerConfig.fileFilter = require(path.resolve('./config/lib/multer')).imageFileFilter;
   var upload = multer(multerConfig).single('newProductImage');
 
-  if (product) {
-    existingImageUrl = product.image_url;
+  if (user) {    
     uploadImage()
-      .then(updateProduct)
-      .then(deleteOldImage)
+      //.then(updateProduct)
+      //.then(deleteOldImage)
       .then(function () {
-        res.json(product);
+        var image_url = config.uploads.product.image.dest + req.file.filename;
+        res.json({
+          user: user,
+          image_url: image_url
+        });
       })
       .catch(function (err) {
         res.status(422).send(err);
@@ -158,10 +162,12 @@ exports.changeProductImage = function (req, res) {
     });
   }
 
-  function updateProduct () {
-    console.log('- iamge url:', config.uploads.product.image.dest + req.file.filename);
+  function updateProduct () {    
+    console.log('- 111:');
     return new Promise(function (resolve, reject) {
+      console.log('- 222:', product);
       product.image_url = config.uploads.product.image.dest + req.file.filename;
+      console.log('- before updateProduct:', product);
       product.save(function (err, uproduct) {
         if (err) {
           console.log(err);
@@ -194,3 +200,9 @@ exports.changeProductImage = function (req, res) {
   }
 
 };
+
+exports.changeProductPicture = function (req, res) {
+  var product = req.product;
+  console.log('- req:', req.user);
+  res.json(true);
+}

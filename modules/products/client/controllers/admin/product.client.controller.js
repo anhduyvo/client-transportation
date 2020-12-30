@@ -5,9 +5,9 @@
     .module('products.admin')
     .controller('ProductsAdminController', ProductsAdminController);
 
-  ProductsAdminController.$inject = ['$scope', '$state', '$window', 'productResolve', 'Authentication', 'Upload', 'Notification'];
+  ProductsAdminController.$inject = ['$scope', '$state', '$window', '$timeout', 'productResolve', 'Authentication', 'Upload', 'Notification'];
 
-  function ProductsAdminController($scope, $state, $window, product, Authentication, Upload, Notification) {
+  function ProductsAdminController($scope, $state, $window, $timeout, product, Authentication, Upload, Notification) {
     var vm = this;
     
     vm.product = product;
@@ -55,7 +55,8 @@
       Upload.upload({
         url: '/api/products/image',
         data: {
-          newProductImage: dataUrl
+          newProductImage: dataUrl,
+          t1: 't1'
         }
       }).then(function (response) {
         $timeout(function () {
@@ -74,7 +75,7 @@
       Notification.success({ message: '<i class="glyphicon glyphicon-ok"></i> Successfully changed product image' });
 
       // Populate user object
-      vm.user = Authentication.user = response;
+      vm.user = Authentication.user = response.user;
 
       // Reset form
       vm.fileSelected = false;
