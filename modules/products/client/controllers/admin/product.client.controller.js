@@ -51,6 +51,7 @@
 
     // upload product image
     function upload(dataUrl) {
+      console.log('- dataUrl:', dataUrl);
       
       Upload.upload({
         url: '/api/products/image',
