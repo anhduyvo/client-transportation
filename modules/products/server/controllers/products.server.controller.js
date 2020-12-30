@@ -45,7 +45,6 @@ exports.read = function (req, res) {
  * Update an product
  */
 exports.update = function (req, res) {
-  console.log('- update:', req.product);
   var product = req.product;
 
   product.title = req.body.title;
