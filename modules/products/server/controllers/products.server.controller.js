@@ -1,12 +1,12 @@
 'use strict';
 
-const { debug } = require('winston');
-
 /**
  * Module dependencies
  */
 var path = require('path'),
   mongoose = require('mongoose'),
+  multer = require('multer'),
+  config = require(path.resolve('./config/config')),
   Product = mongoose.model('Product'),
   errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller'));
 
@@ -45,10 +45,12 @@ exports.read = function (req, res) {
  * Update an product
  */
 exports.update = function (req, res) {
+
   var product = req.product;
 
   product.title = req.body.title;
   product.content = req.body.content;
+  product.image_url = req.body.image_url;
 
   product.save(function (err) {
     if (err) {
@@ -82,7 +84,6 @@ exports.delete = function (req, res) {
  * List of Products
  */
 exports.list = function (req, res) {
-  console.log('--- list ---');
   Product.find().sort('-created').populate('user', 'displayName').exec(function (err, products) {
     if (err) {
       return res.status(422).send({
@@ -98,7 +99,6 @@ exports.list = function (req, res) {
  * Product middleware
  */
 exports.productByID = function (req, res, next, id) {
-
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).send({
       message: 'product is invalid'
@@ -123,8 +123,10 @@ exports.productByID = function (req, res, next, id) {
  */
 exports.changeProductImage = function (req, res) {
   console.log('----- changeProductImage -----');
-
-  var product = req.product;
+  console.log('- req.product:', req.product);
+  console.log('- req.user:', req.user);
+  
+  var product = req.user; // TO DO review client side
   var existingImageUrl;
 
   // Filtering to upload only images
