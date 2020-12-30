@@ -13,9 +13,8 @@ module.exports = function (app) {
     .post(products.create);
 
   // Single product routes
-  app.route('/api/products/:productId').all(productsPolicy.isAllowed)
+  app.route('/api/products/:productId') //.all(productsPolicy.isAllowed)
     .get(products.read)
-    .post(products.changeProductImage)
     .put(products.update)
     .delete(products.delete);
 
