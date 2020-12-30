@@ -45,7 +45,7 @@ exports.read = function (req, res) {
  * Update an product
  */
 exports.update = function (req, res) {
-
+  console.log('- update:', req.product);
   var product = req.product;
 
   product.title = req.body.title;
@@ -122,11 +122,7 @@ exports.productByID = function (req, res, next, id) {
  * Update product image
  */
 exports.changeProductImage = function (req, res) {
-  console.log('----- changeProductImage -----');
-  console.log('- req.product:', req.product);
-  //console.log('- req.product:', req.product);
-  
-  var product = req.product; // TO DO review client side
+  var product = req.user; // TO DO review client side
   var existingImageUrl;
 
   // Filtering to upload only images
@@ -136,7 +132,6 @@ exports.changeProductImage = function (req, res) {
 
   if (product) {
     existingImageUrl = product.image_url;
-    //console.log('- product:', product);
     uploadImage()
       .then(updateProduct)
       .then(deleteOldImage)
@@ -165,15 +160,16 @@ exports.changeProductImage = function (req, res) {
   }
 
   function updateProduct () {
-    console.log('- NOW - updateProduct:');
-    console.log(product);
+    console.log('- iamge url:', config.uploads.product.image.dest + req.file.filename);
     return new Promise(function (resolve, reject) {
       product.image_url = config.uploads.product.image.dest + req.file.filename;
-      product.save(function (err, theproduct) {
+      product.save(function (err, uproduct) {
         if (err) {
+          console.log(err);
           reject(err);
         } else {
-          resolve();
+          console.log(uproduct);
+          resolve(uproduct);
         }
       });
     });
