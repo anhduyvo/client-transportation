@@ -124,9 +124,9 @@ exports.productByID = function (req, res, next, id) {
 exports.changeProductImage = function (req, res) {
   console.log('----- changeProductImage -----');
   console.log('- req.product:', req.product);
-  console.log('- req.user:', req.user);
+  //console.log('- req.product:', req.product);
   
-  var product = req.user; // TO DO review client side
+  var product = req.product; // TO DO review client side
   var existingImageUrl;
 
   // Filtering to upload only images
@@ -136,6 +136,7 @@ exports.changeProductImage = function (req, res) {
 
   if (product) {
     existingImageUrl = product.image_url;
+    //console.log('- product:', product);
     uploadImage()
       .then(updateProduct)
       .then(deleteOldImage)
@@ -152,7 +153,6 @@ exports.changeProductImage = function (req, res) {
   }
 
   function uploadImage () {
-    console.log('----- uploadImage -----');
     return new Promise(function (resolve, reject) {
       upload(req, res, function (uploadError) {
         if (uploadError) {
@@ -165,6 +165,8 @@ exports.changeProductImage = function (req, res) {
   }
 
   function updateProduct () {
+    console.log('- NOW - updateProduct:');
+    console.log(product);
     return new Promise(function (resolve, reject) {
       product.image_url = config.uploads.product.image.dest + req.file.filename;
       product.save(function (err, theproduct) {
