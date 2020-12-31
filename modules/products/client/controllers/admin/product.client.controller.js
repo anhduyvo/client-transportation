@@ -10,13 +10,13 @@
   function ProductsAdminController($scope, $state, $window, $timeout, product, Authentication, Upload, Notification) {
     var vm = this;
     
-    vm.isUploading = false;
     vm.product = product;
     vm.authentication = Authentication;
     vm.form = {};
     vm.remove = remove;
     vm.save = save;
     vm.upload = upload;
+    vm.isUploading = false;
 
     // Remove existing product
     function remove() {
