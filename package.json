@@ -35,6 +35,7 @@
     "generate-ssl-certs": "scripts/generate-ssl-certs.sh"
   },
   "dependencies": {
+    "@azure/storage-blob": "^12.3.0",
     "acl": "~0.4.10",
     "async": "~2.3.0",
     "body-parser": "~1.17.1",
