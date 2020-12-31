@@ -123,19 +123,17 @@ exports.productByID = function (req, res, next, id) {
  * Update product image
  */
 exports.changeProductImage = function (req, res) {
-  var user = req.user;
   
   // Filtering to upload only images
   var multerConfig = config.uploads.product.image;
   multerConfig.fileFilter = require(path.resolve('./config/lib/multer')).imageFileFilter;
   var upload = multer(multerConfig).single('newProductImage');
 
+  var user = req.user;
+  var image_url = config.uploads.product.image.dest + req.file.filename;
   if (user) {    
     uploadImage()
-      //.then(updateProduct)
-      //.then(deleteOldImage)
       .then(function () {
-        var image_url = config.uploads.product.image.dest + req.file.filename;
         res.json({
           user: user,
           image_url: image_url
@@ -152,18 +150,14 @@ exports.changeProductImage = function (req, res) {
 
   function uploadImage () {
     return new Promise(function (resolve, reject) {
-      upload(req, res, function (uploadError) {
-        if (uploadError) {
-          reject(errorHandler.getErrorMessage(uploadError));
-        } else {
-          resolve();
-        }
+      upload(req, res, function (err) {
+        if (err)  reject(errorHandler.getErrorMessage(err));
+        else resolve();
       });
     });
   }
 
-  function updateProduct () {    
-    console.log('- 111:');
+  function updateProduct () {
     return new Promise(function (resolve, reject) {
       console.log('- 222:', product);
       product.image_url = config.uploads.product.image.dest + req.file.filename;
@@ -200,9 +194,3 @@ exports.changeProductImage = function (req, res) {
   }
 
 };
-
-exports.changeProductPicture = function (req, res) {
-  var product = req.product;
-  console.log('- req:', req.user);
-  res.json(true);
-}
