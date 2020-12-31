@@ -76,6 +76,7 @@
 
       // Populate user object
       vm.user = Authentication.user = response.user;
+      vm.product.image_url = response.image_url;
 
       // Reset form
       vm.fileSelected = false;

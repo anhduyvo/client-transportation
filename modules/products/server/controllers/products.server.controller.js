@@ -69,7 +69,6 @@ exports.update = function (req, res) {
  */
 exports.delete = function (req, res) {
   var product = req.product;
-
   product.remove(function (err) {
     if (err) {
       return res.status(422).send({
@@ -123,17 +122,17 @@ exports.productByID = function (req, res, next, id) {
  * Update product image
  */
 exports.changeProductImage = function (req, res) {
+  var user = req.user;  
   
   // Filtering to upload only images
   var multerConfig = config.uploads.product.image;
   multerConfig.fileFilter = require(path.resolve('./config/lib/multer')).imageFileFilter;
   var upload = multer(multerConfig).single('newProductImage');
 
-  var user = req.user;
-  var image_url = config.uploads.product.image.dest + req.file.filename;
-  if (user) {    
+  if (user) {
     uploadImage()
       .then(function () {
+        var image_url = '/' + config.uploads.product.image.dest + req.file.filename;
         res.json({
           user: user,
           image_url: image_url
@@ -155,42 +154,6 @@ exports.changeProductImage = function (req, res) {
         else resolve();
       });
     });
-  }
-
-  function updateProduct () {
-    return new Promise(function (resolve, reject) {
-      console.log('- 222:', product);
-      product.image_url = config.uploads.product.image.dest + req.file.filename;
-      console.log('- before updateProduct:', product);
-      product.save(function (err, uproduct) {
-        if (err) {
-          console.log(err);
-          reject(err);
-        } else {
-          console.log(uproduct);
-          resolve(uproduct);
-        }
-      });
-    });
-  }
-
-  function deleteOldImage () {
-    return new Promise(function (resolve, reject) {
-      if (existingImageUrl !== Product.schema.path('image_url').defaultValue) {
-        fs.unlink(existingImageUrl, function (unlinkError) {
-          if (unlinkError) {
-            console.log(unlinkError);
-            reject({
-              message: 'Error occurred while deleting old product image'
-            });
-          } else {
-            resolve();
-          }
-        });
-      } else {
-        resolve();
-      }
-    });
-  }
+  }  
 
 };
