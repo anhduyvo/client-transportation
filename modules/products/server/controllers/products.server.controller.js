@@ -152,6 +152,5 @@ exports.changeProductImage = function (req, res) {
         else resolve();
       });
     });
-  }  
-
+  }
 };
