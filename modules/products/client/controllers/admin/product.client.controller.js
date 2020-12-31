@@ -10,6 +10,7 @@
   function ProductsAdminController($scope, $state, $window, $timeout, product, Authentication, Upload, Notification) {
     var vm = this;
     
+    vm.isUploading = false;
     vm.product = product;
     vm.authentication = Authentication;
     vm.form = {};
@@ -29,6 +30,11 @@
 
     // Save product
     function save(isValid) {
+      if (vm.isUploading) {
+        $scope.$broadcast('show-errors-form-is-uploading', 'vm.form.productForm');
+        return false;
+      }
+
       if (!isValid) {
         $scope.$broadcast('show-errors-check-validity', 'vm.form.productForm');
         return false;
@@ -51,7 +57,8 @@
 
     // upload product image
     function upload(dataUrl) {
-      
+      vm.isUploading = true;
+
       Upload.upload({
         url: '/api/products/image',
         data: {
@@ -80,12 +87,14 @@
       // Reset form
       vm.fileSelected = false;
       vm.progress = 0;
+      vm.isUploading = false;
     }
 
     // Called after the user has failed to upload a new picture
     function onErrorItem(response) {
       vm.fileSelected = false;
       vm.progress = 0;
+      vm.isUploading = false;
 
       // Show error message
       Notification.error({ message: response.message, title: '<i class="glyphicon glyphicon-remove"></i> Failed to change product image' });
