@@ -15,7 +15,7 @@ var path = require('path'),
  */
 exports.create = function (req, res) {
   var product = new Product(req.body);
-  product.product = req.product;
+  product.user = req.user;
 
   product.save(function (err) {
     if (err) {
@@ -45,8 +45,6 @@ exports.read = function (req, res) {
  * Update an product
  */
 exports.update = function (req, res) {
-  console.log('- update product:', req.product);
-  console.log('- update body:', req.body);
   var product = req.product;
 
   product.title = req.body.title;
