@@ -5,6 +5,8 @@
  */
 var path = require('path'),
   mongoose = require('mongoose'),
+  multer = require('multer'),
+  config = require(path.resolve('./config/config')),
   Product = mongoose.model('Product'),
   errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller'));
 
@@ -47,6 +49,7 @@ exports.update = function (req, res) {
 
   product.title = req.body.title;
   product.content = req.body.content;
+  product.image_url = req.body.image_url;
 
   product.save(function (err) {
     if (err) {
@@ -64,7 +67,6 @@ exports.update = function (req, res) {
  */
 exports.delete = function (req, res) {
   var product = req.product;
-
   product.remove(function (err) {
     if (err) {
       return res.status(422).send({
@@ -95,7 +97,6 @@ exports.list = function (req, res) {
  * Product middleware
  */
 exports.productByID = function (req, res, next, id) {
-
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).send({
       message: 'product is invalid'
@@ -116,24 +117,24 @@ exports.productByID = function (req, res, next, id) {
 };
 
 /**
- * Update product image picture
+ * Update product image
  */
 exports.changeProductImage = function (req, res) {
-  var product = req.product;
-  var existingImageUrl;
-
+  var user = req.user;  
+  
   // Filtering to upload only images
   var multerConfig = config.uploads.product.image;
   multerConfig.fileFilter = require(path.resolve('./config/lib/multer')).imageFileFilter;
   var upload = multer(multerConfig).single('newProductImage');
 
-  if (product) {
-    existingImageUrl = product.profileImageURL;
+  if (user) {
     uploadImage()
-      .then(updateProduct)
-      .then(deleteOldImage)
       .then(function () {
-        res.json(user);
+        var image_url = '/' + config.uploads.product.image.dest + req.file.filename;
+        res.json({
+          user: user,
+          image_url: image_url
+        });
       })
       .catch(function (err) {
         res.status(422).send(err);
@@ -146,46 +147,10 @@ exports.changeProductImage = function (req, res) {
 
   function uploadImage () {
     return new Promise(function (resolve, reject) {
-      upload(req, res, function (uploadError) {
-        if (uploadError) {
-          reject(errorHandler.getErrorMessage(uploadError));
-        } else {
-          resolve();
-        }
+      upload(req, res, function (err) {
+        if (err)  reject(errorHandler.getErrorMessage(err));
+        else resolve();
       });
     });
   }
-
-  function updateProduct () {
-    return new Promise(function (resolve, reject) {
-      user.profileImageURL = config.uploads.profile.image.dest + req.file.filename;
-      user.save(function (err, theuser) {
-        if (err) {
-          reject(err);
-        } else {
-          resolve();
-        }
-      });
-    });
-  }
-
-  function deleteOldImage () {
-    return new Promise(function (resolve, reject) {
-      if (existingImageUrl !== User.schema.path('profileImageURL').defaultValue) {
-        fs.unlink(existingImageUrl, function (unlinkError) {
-          if (unlinkError) {
-            console.log(unlinkError);
-            reject({
-              message: 'Error occurred while deleting old profile picture'
-            });
-          } else {
-            resolve();
-          }
-        });
-      } else {
-        resolve();
-      }
-    });
-  }
-
 };
