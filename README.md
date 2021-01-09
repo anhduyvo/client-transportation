@@ -1,2 +1,5 @@
 # demo-news
-demo news
+- angularjs
+- nodejs
+- expressjs
+- mongodb
