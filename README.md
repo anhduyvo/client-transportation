@@ -2,4 +2,4 @@
 - angularjs
 - nodejs
 - expressjs
-- mongodb
+- mongodb (or cosmosdb)
