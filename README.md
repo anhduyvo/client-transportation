@@ -1,4 +1,4 @@
-# dak-thailand
+# demo-thai
 - angularjs
 - nodejs
 - expressjs
