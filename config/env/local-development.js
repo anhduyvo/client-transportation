@@ -9,7 +9,7 @@ module.exports = {
     }
   },
   domain: process.env.DOMAIN || 'localhost',
-  sessionSecret: process.env.MONGODB_URI || 'i_love_java_scripts',
+  sessionSecret: process.env.SESSION_SECRET || 'i_love_money',
   facebook: {
     clientID: process.env.FACEBOOK_ID || 'APP_ID',
     clientSecret: process.env.FACEBOOK_SECRET || 'APP_SECRET',
