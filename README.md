@@ -3,4 +3,4 @@
 - nodejs
 - expressjs
 - mongodb (or cosmosdb, dynamodb)
-- mssql
+- microsoft sql
