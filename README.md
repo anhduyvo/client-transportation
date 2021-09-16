@@ -2,5 +2,5 @@
 - angularjs
 - nodejs
 - expressjs
-- mongodb (or cosmosdb)
-- microsoft sql
+- mongodb (or cosmosdb, dynamodb)
+- mssql
